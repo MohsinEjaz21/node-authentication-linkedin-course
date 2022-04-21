@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  mongodbService:
+    container_name: mongodb_container
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGODB_ADMIN_USER
+      MONGO_INITDB_ROOT_PASSWORD: $MONGODB_ADMIN_PASS
+      MONGO_INITDB_DATABASE: $MONGODB_APPLICATION_DATABASE
+    ports:
+      - $MONGODB_LOCAL_PORT:$MONGODB_DOCKER_PORT
+    volumes:
+      - ./mongodata:/data/db
+    restart: always
