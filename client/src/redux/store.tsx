@@ -1,6 +1,6 @@
-import { bindActionCreators, configureStore } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { AuthSlice } from './authSlice';
+import { NewSlice } from './reduxUtils';
 
 export const reduxStore = configureStore({
   reducer: {
@@ -11,12 +11,6 @@ export const reduxStore = configureStore({
   }),
 })
 
-const NewSlice = (Slice) => {
-  type StateType = typeof Slice.getInitialState;
-  const state = (): StateType => useSelector((state: any) => state[AuthSlice.name]);
-  const actions = bindActionCreators(Slice.actions, reduxStore.dispatch)
-  return { actions, state };
-}
 
-export const { actions: authSliceAction, state: authSliceState } = NewSlice(AuthSlice);
+export const { actions: AuthSliceAction, state: AuthSliceState } = NewSlice(AuthSlice);
 

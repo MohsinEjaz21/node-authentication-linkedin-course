@@ -1,14 +1,16 @@
 import { Navigate } from 'react-router-dom';
-import { authSliceState } from 'src/redux/store';
+import useUser from 'src/auth/useUser';
 
 
 
 function PrivateRoute(props: IPrivateRouteProps) {
 
-  const { isLogined } = authSliceState();
+  // const { isLogined } = AuthSliceState();
+  const { user } = useUser();
+  console.log("user 🌈", user)
 
   const renderFn = () => {
-    if (!isLogined) {
+    if (!user) {
       return <Navigate to="/login" />
     }
     return props.children

@@ -2,20 +2,27 @@
 import axios from "axios";
 import { config } from "src/config";
 
+
 export default function post(params: IPost) {
-  const { payload, url: routeTo } = params;
+  const { data, url: routeTo, method = 'POST' } = params;
   console.log(`serverUrl is ${config.SERVER_URL}`);
   return (
     axios({
-      headers: { 'Content-Type': 'application/json' },
-      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${params.token}`,
+      },
+      method: method,
       url: `${config.SERVER_URL}${routeTo}`,
-      data: payload
+      data: data || {},
     })
   )
 }
 
 interface IPost {
-  payload: any
+  data: any
   url?: string
+  method?: any,
+  token?: string
 }
+

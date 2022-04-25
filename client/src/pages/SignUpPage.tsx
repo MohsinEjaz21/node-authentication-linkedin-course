@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useToken from "src/auth/useToken";
+import axios from "src/helpers/axios";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { setToken } = useToken()
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = () => {
-    alert('Login with email: ' + email + ' and password: ' + password);
+  const handleSubmit = async () => {
+    // alert('Login with email: ' + email + ' and password: ' + password);
+    const response = await axios.post({
+      url: "/api/signup", data: { email, password, confirmPassword }
+    })
+    const { token } = response.data
+    setToken(token)
+    navigate('/profile')
   }
 
   return (

@@ -5,6 +5,7 @@ import { App } from './App';
 import './index.css';
 import { reduxStore } from './redux/store';
 
+
 const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <StrictMode>
@@ -13,3 +14,5 @@ root.render(
     </Provider>
   </StrictMode>
 );
+
+

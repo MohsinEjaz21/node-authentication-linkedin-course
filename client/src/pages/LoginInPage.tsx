@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authSliceAction } from "src/redux/store";
+import useToken from "src/auth/useToken";
+import axios from "src/helpers/axios";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("salman@mailinator.com");
+  const [password, setPassword] = useState("123");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate()
+  const { token, setToken } = useToken();
 
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
     if (email && password) {
-      authSliceAction.setIsLogined(true);
-      navigate('/profile');
+      const response = await axios.post({
+        url: "/api/login", data: { email, password }
+      })
+      const { token } = response.data
+      setToken(token)
+      navigate('/profile')
     }
   }
 
