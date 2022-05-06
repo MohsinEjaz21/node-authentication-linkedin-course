@@ -1,43 +1,47 @@
+import { getDbConnection } from '@src/db';
+import { createJwtPayload } from '@src/utils/common';
+import IApp from '@src/utils/interfaces';
 import axios from 'axios';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import IApp from 'utils/interfaces';
-import { getDbConnection } from "../../db";
-import { createJwtPayload } from '../../utils/common';
+import { PATH } from '../paths';
 
 
 export const signUpRoute = {
-  path: '/api/signup',
+  path: PATH.auth.signUp,
   method: 'post',
   handler: async (req, res) => {
     let payload: IApp.SignUp = req.body || {};
     console.log("signUpRoute payload 🌈", req.body)
 
     const db = getDbConnection()
-    await blockDuplicateUser();
+    const user = await findUserByEmail();
+    if (user) {
+      return res.status(409).send('User already exists');
+    }
     payload.password = await encryptPlainPassword();
     payload.info = { hairColor: '', favoriteFood: '', bio: '' }
     payload.isVerified = false;
 
-    const result = await insertUser()
-    return signJwt();
+    const insertPayload = Object.assign({}, payload);
+    insertPayload.confirmPassword ? delete insertPayload.confirmPassword : null;
+
+    const result = await insertUser(insertPayload)
+    return signJwt(insertPayload);
 
     async function encryptPlainPassword() {
       return await bcrypt.hash(payload.password, 10);
     }
 
-    async function insertUser() {
+    async function insertUser(payload) {
       return await db.collection('users').insertOne(payload);
     }
 
-    async function blockDuplicateUser() {
-      const user = await db.collection('users').findOne({ email: payload.email });
-      if (user) {
-        return res.status(409).send('User already exists');
-      }
+    async function findUserByEmail() {
+      return await db.collection('users').findOne({ email: payload.email });
     }
 
-    function signJwt() {
+    function signJwt(payload) {
       payload.id = result.insertedId;
       const jwtPayload: IApp.JwtPayload = createJwtPayload(payload);
 

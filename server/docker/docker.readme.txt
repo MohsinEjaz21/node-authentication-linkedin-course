@@ -8,5 +8,5 @@ docker exec -it $(docker ps -q -f name=mongodb_container) /bin/sh
 mongo
 use admin
 db.auth('root', '1234')
-use user_auth_db
+use ums_db
 db.createUser({user: "mohsin" , pwd: "1234" , roles:["readWrite"]})

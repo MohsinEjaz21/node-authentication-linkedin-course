@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import PrivateRoute from './helpers/gaurd/gaurd';
-import Page404 from './pages/404';
-import LoginPage from './pages/LoginInPage';
-import SignUpPage from './pages/SignUpPage';
-import UserInfoPage from './pages/UserInfoPage';
+import PrivateRoute from '../../helpers/gaurd/gaurd';
+import Page404 from '../../pages/404';
+import LoginPage from '../../pages/LoginInPage';
+import SignUpPage from '../../pages/SignUpPage';
+import UserInfoPage from '../../pages/UserInfoPage';
 
 const MyRoutes = () => {
   return (

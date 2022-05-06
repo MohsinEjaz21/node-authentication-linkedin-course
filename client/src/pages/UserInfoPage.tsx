@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useToken from 'src/auth/useToken';
 import useUser from 'src/auth/useUser';
 import axios from 'src/helpers/axios';
+import { PATH } from '../routes/backend/paths';
 
 const UserInfoPage = () => {
   // We'll use the history to navigate the user
@@ -39,9 +40,12 @@ const UserInfoPage = () => {
     // update the user's info with any changes we've
     // made to the text input values
 
+    console.log("PATH 🌈", PATH.user.updateUserInfo.replace(':userId', id))
+
+
     const response = await axios.post({
       data: { favoriteFood, hairColor, bio },
-      url: `/api/users/${id}`,
+      url: PATH.user.updateUserInfo.replace(':userId', id),
       token: token,
       method: 'PUT'
     })

@@ -13,6 +13,7 @@ namespace IApp {
     password: string,
     isVerified: boolean
     info?: SignUpInfo
+    confirmPassword?: string
   }
 
   export interface JwtPayload {

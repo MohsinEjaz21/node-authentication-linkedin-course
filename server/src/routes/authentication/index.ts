@@ -1,7 +1,7 @@
-import { emailConfirmation } from "./emailConfirmation";
-import { loginRoute } from "./loginRoute";
+import { emailConfirmation } from "./confirmEmail";
+import { loginRoute } from "./login";
 import { sendEmailRoute } from "./sendEmail";
-import { signUpRoute } from "./signUpRoute";
+import { signUpRoute } from "./signUp";
 
 export const authRoutes = [
   emailConfirmation,

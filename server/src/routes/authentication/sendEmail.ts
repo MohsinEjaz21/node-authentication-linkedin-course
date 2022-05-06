@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import { PATH } from "../paths";
 
 export const sendEmailRoute = {
-  path: '/api/sendEmail',
+  path: PATH.auth.sendEmail,
   method: 'post',
   handler: async (req, res) => {
 
@@ -39,13 +40,12 @@ export const sendEmailRoute = {
 
     async function sendEmail(TOKEN) {
       const { SENDER, RECIEVERS, SUBJECT } = props;
+      let confirmEmailRoute = PATH.auth.confirmEmail.replace(':token', TOKEN);
       const HTML = `
       <h1>Verify your Email</h1>
       <p>
         Please click on the link to verify your email
-        <a href="
-        http://localhost:3000/confirmation/${TOKEN}
-        ">Click to Verify Email</a>
+        <a href="${confirmEmailRoute}">Click me to verify account</a>
       </p>
       `
       transporter.sendMail({

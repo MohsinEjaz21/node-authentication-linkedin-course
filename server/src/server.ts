@@ -2,7 +2,15 @@ import cors from 'cors';
 import express from 'express';
 import { initializeDbConnection } from './db';
 import { routes } from './routes';
-const PORT = process.env.PORT || 8080;
+
+const path = require('path')
+const url = require('url');
+
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+
+const parsedUrl = url.parse(process.env.SERVER_URL);
+const PORT = parsedUrl.port || 8080;
+
 
 const app = express();
 

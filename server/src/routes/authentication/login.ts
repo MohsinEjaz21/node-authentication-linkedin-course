@@ -1,12 +1,12 @@
+import IApp from '@src/utils/interfaces';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import IApp from 'utils/interfaces';
 import { getDbConnection } from "../../db";
-import { createJwtPayload } from '../../utils/common';
-
+import { createJwtPayload, sendEmailAxios } from '../../utils/common';
+import { PATH } from '../paths';
 
 export const loginRoute = {
-  path: '/api/login',
+  path: PATH.auth.login,
   method: 'post',
   handler: async (req, res) => {
     console.log("body payload => ", req.body)
@@ -40,10 +40,17 @@ export const loginRoute = {
     function signJwt(payload) {
       const jwtPayload: any = createJwtPayload(payload);
       console.log("jwt payload 🌈", payload)
+
       jwt.sign(jwtPayload, process.env.JWT_SECRET, { expiresIn: '2d' }, (err, token) => {
         if (err) {
           return res.status(500).send("Jwt Sign Error");
         }
+
+        if (!foundUser?.isVerified) {
+          sendEmailAxios(token);
+          return res.status(401).send('you are not verified yet , please check your email');
+        }
+
         return res.status(200).send({ token });
       });
     }

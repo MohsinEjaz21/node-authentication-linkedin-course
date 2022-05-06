@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useToken from "src/auth/useToken";
 import axios from "src/helpers/axios";
+import { PATH } from '../routes/backend/paths';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("salman@mailinator.com");
-  const [password, setPassword] = useState("123");
+  const [email, setEmail] = useState("mejaz17821@mailinator.com");
+  const [password, setPassword] = useState("1234");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate()
   const { token, setToken } = useToken();
@@ -13,7 +14,7 @@ const LoginPage = () => {
   const handleLoginClick = async () => {
     if (email && password) {
       const response = await axios.post({
-        url: "/api/login", data: { email, password }
+        url: PATH.auth.login, data: { email, password }
       })
       const { token } = response.data
       setToken(token)

@@ -1,20 +1,45 @@
 {
+  "ts-node": {
+    "transpileOnly": true,
+    "require": [
+      "typescript-transform-paths/register",
+      "tsconfig-paths/register"
+    ]
+  },
   "compilerOptions": {
+    "types": [
+      "node"
+    ],
     "sourceMap": true,
-    "target": "es2017",
+    "target": "ESNext",
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": "src",
+    "rootDir": ".",
     "alwaysStrict": true,
     "module": "commonjs",
+    "importHelpers": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "checkJs": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
+    "paths": {
+      "@src/*": [
+        "./*"
+      ],
+      "@controllers/*": [
+        "./controllers/*"
+      ],
+    },
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      }
+    ]
   },
   "include": [
-    "src/**/*.ts"
+    "./src"
   ],
   "exclude": [
     "node_modules"

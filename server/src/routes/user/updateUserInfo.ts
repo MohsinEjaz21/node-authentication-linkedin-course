@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
-import IApp from 'utils/interfaces';
+import IApp from 'src/utils/interfaces';
 import { getDbConnection } from '../../db';
 import { createJwtPayload } from '../../utils/common';
+import { PATH } from '../paths';
 const { ObjectId } = require('mongodb');
 
 export const updateUserInfo = {
-  path: '/api/users/:userId',
+  path: PATH.user.updateUserInfo,
   method: 'put',
   handler: (req, res) => {
     const { authorization } = req.headers;
