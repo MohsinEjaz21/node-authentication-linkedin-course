@@ -1,6 +1,6 @@
-import { getDbConnection } from "@src/db";
+import { getDbConnection } from '@src/db';
 import jwt from "jsonwebtoken";
-import { PATH } from "../paths";
+import { CLIENT_LOGIN_URL, PATH } from "../../../config";
 const { ObjectId } = require('mongodb');
 
 export const emailConfirmation = {
@@ -19,7 +19,7 @@ export const emailConfirmation = {
     console.log('user 👉 ', updatedUser)
 
     if (updatedUser) {
-      res.redirect('http://localhost:3000/login');
+      res.redirect(CLIENT_LOGIN_URL);
     } else {
       res.status(400).json({
         message: 'Email confirmation failed',

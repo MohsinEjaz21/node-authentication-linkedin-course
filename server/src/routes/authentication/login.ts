@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getDbConnection } from "../../db";
 import { createJwtPayload, sendEmailAxios } from '../../utils/common';
-import { PATH } from '../paths';
+import { PATH } from '../../config';
 
 export const loginRoute = {
   path: PATH.auth.login,

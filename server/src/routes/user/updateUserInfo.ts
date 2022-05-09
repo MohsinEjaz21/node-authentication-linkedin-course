@@ -1,8 +1,8 @@
+import IApp from '@src/utils/interfaces';
 import jwt from 'jsonwebtoken';
-import IApp from 'src/utils/interfaces';
+import { PATH } from '../../config';
 import { getDbConnection } from '../../db';
 import { createJwtPayload } from '../../utils/common';
-import { PATH } from '../paths';
 const { ObjectId } = require('mongodb');
 
 export const updateUserInfo = {

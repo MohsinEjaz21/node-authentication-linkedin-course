@@ -2,11 +2,9 @@ import mongoose from 'mongoose';
 const path = require('path')
 require('dotenv').config({ path: path.resolve(__dirname, '../docker/.env') })
 
-export const initializeDbConnection = async () => {
+const initializeDbConnection = async () => {
   const { MONGODB_APPLICATION_DATABASE: dbName } = process.env
   console.log("dbName 🌈", dbName)
-
-
   await mongoose.connect(`mongodb://mohsin:1234@localhost:27017/${dbName}?authMechanism=DEFAULT&authSource=${dbName}`)
     .then(() => {
       let { db } = mongoose.connection;
@@ -16,8 +14,9 @@ export const initializeDbConnection = async () => {
     });
 }
 
-
-export const getDbConnection = () => {
+const getDbConnection = () => {
   let { db } = mongoose.connection;
   return db;
 }
+
+export { getDbConnection, initializeDbConnection };

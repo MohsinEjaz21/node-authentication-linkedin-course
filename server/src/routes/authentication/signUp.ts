@@ -1,11 +1,9 @@
 import { getDbConnection } from '@src/db';
-import { createJwtPayload } from '@src/utils/common';
+import { createJwtPayload, sendEmailAxios } from '@src/utils/common';
 import IApp from '@src/utils/interfaces';
-import axios from 'axios';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { PATH } from '../paths';
-
+import { PATH } from '../../config';
 
 export const signUpRoute = {
   path: PATH.auth.signUp,
@@ -50,15 +48,7 @@ export const signUpRoute = {
         if (err) {
           return res.status(500).send(err);
         }
-
-        axios.post('http://localhost:1337/api/sendEmail', { token }).then(() => {
-          console.log('Email sent successfully');
-          // return res.status(200).send('Email sent');
-        }).catch((err) => {
-          console.log('Email sent failed => ', err);
-          // return res.status(500).send(err);
-        });
-
+        sendEmailAxios(token);
         return res.status(200).send({ token });
       });
     }

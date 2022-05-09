@@ -18,6 +18,9 @@ const app = express();
 // requests in our route handlers (as req.body)
 app.use(cors());
 app.use(express.json());
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, '..', 'assets')));
+app.use(express.static(path.join(__dirname, '/public/assets/')));
 
 
 // Add all the routes to our Express server

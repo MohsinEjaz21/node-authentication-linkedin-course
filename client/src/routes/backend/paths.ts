@@ -10,6 +10,7 @@ export const PATH = (() => {
       signUp: `${AUTH}signup`,
       confirmEmail: `${AUTH}confirmation:token`,
       sendEmail: `${AUTH}sendEmail`,
+      forgetPassword: `${AUTH}forgetPassword`,
     }
   }
 })()

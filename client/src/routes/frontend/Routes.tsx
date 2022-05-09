@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ForgetPasswordPage from 'src/pages/ForgetPasswordPage';
 import PrivateRoute from '../../helpers/gaurd/gaurd';
 import Page404 from '../../pages/404';
 import LoginPage from '../../pages/LoginInPage';
@@ -12,6 +13,7 @@ const MyRoutes = () => {
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/forgot-password" element={<ForgetPasswordPage />} />
         <Route path="/profile" element={<PrivateRoute > <UserInfoPage /></PrivateRoute>} />
         <Route path="*" element={<Page404 />} />
       </Routes>

@@ -8,7 +8,9 @@
     "**/Thumbs.db": true,
     "**/mongodata": true,
     "trash/trash": true,
-    "**/trash": true
+    "**/trash": true,
+    "sendEmail.ts.zip": true,
+    "**/*.zip": true
   },
   "explorerExclude.backup": null
 }

@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { PATH } from "../paths";
+import path from "path";
+import { CONFIRM_EMAIL_URL, PATH } from "../../../config";
+const mailHandleBar = require('nodemailer-express-handlebars')
 
 export const sendEmailRoute = {
   path: PATH.auth.sendEmail,
@@ -22,8 +24,23 @@ export const sendEmailRoute = {
       RECIEVERS: RECEIVER_EMAIL,
     }
 
-    let transporter = createTransporter();
-    sendEmail(token);
+    main();
+
+    function main() {
+      let transporter = createTransporter();
+      transporter.use('compile', mailHandleBar(handlebarOptions()));
+      sendEmail(transporter, token);
+    }
+
+    function handlebarOptions() {
+      return {
+        viewEngine: {
+          partialsDir: path.resolve('public/assets/hbs/'),
+          defaultLayout: false,
+        },
+        viewPath: path.resolve('public/assets/hbs/')
+      }
+    };
 
     function createTransporter() {
       const { HOST, PORT, SENDER_EMAIL, SENDER_PASSWORD, SECURE } = props;
@@ -38,21 +55,17 @@ export const sendEmailRoute = {
       });
     }
 
-    async function sendEmail(TOKEN) {
+    async function sendEmail(transporter, TOKEN) {
       const { SENDER, RECIEVERS, SUBJECT } = props;
-      let confirmEmailRoute = PATH.auth.confirmEmail.replace(':token', TOKEN);
-      const HTML = `
-      <h1>Verify your Email</h1>
-      <p>
-        Please click on the link to verify your email
-        <a href="${confirmEmailRoute}">Click me to verify account</a>
-      </p>
-      `
       transporter.sendMail({
         from: SENDER,
         to: RECIEVERS,
         subject: SUBJECT,
-        html: HTML,
+        template: 'sendEmail',
+        context: {
+          STYLES: path.resolve('public/assets/css/'),
+          TOKEN: CONFIRM_EMAIL_URL(TOKEN)
+        }
       }).then(info => {
         console.log("Message sent: %s", info.messageId);
       })
